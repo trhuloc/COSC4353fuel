@@ -11,7 +11,7 @@
         <h2>Welcome to the Dashboard</h2>
         <div>
             <a href="fuel_quote_form.html" style="text-decoration: none;">
-                <button style="padding: 10px 20px; margin-right: 10px;">Fuel Quote Form</button>
+                <button style="padding: 10px 20px; margin-right: 10px;">Fuel Quote Formasbasdas</button>
             </a>
             <a href="quote_history.html" style="text-decoration: none;">
                 <button style="padding: 10px 20px; margin-right: 10px;">Fuel Quote History</button>
