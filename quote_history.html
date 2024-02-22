@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Fuel Quote History</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <style>
+        .taskbar {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .taskbar-button {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .taskbar-button:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="taskbar">
+        <a href="dashboard.php" class="taskbar-button">Dashboard</a>
+        <a href="fuel_quote_form.html" class="taskbar-button">Fuel Quote Form</a>
+        <a href="quote_history.php" class="taskbar-button">Fuel Quote History</a>
+        <a href="profile_management.php" class="taskbar-button">Profile Management</a>
+        <a href="logout.php" class="taskbar-button">Logout</a>
+    </div>
+    <div class="container">
+        <h2>Fuel Quote History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Quote ID</th>
+                    <th>Client ID</th>
+                    <th>Gallons Requested</th>
+                    <th>Delivery Date</th>
+                    <th>Delivery Address</th>
+                    <th>Suggested Price / Gallon</th>
+                    <th>Total Amount Due</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>101</td>
+                    <td>1000</td>
+                    <td>2024-02-10</td>
+                    <td>In-State</td>
+                    <td>$1.50</td>
+                    <td>$1500.00</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>102</td>
+                    <td>800</td>
+                    <td>2024-02-12</td>
+                    <td>Out-State</td>
+                    <td>$1.60</td>
+                    <td>$1280.00</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>103</td>
+                    <td>1200</td>
+                    <td>2024-02-15</td>
+                    <td>In-State</td>
+                    <td>$1.55</td>
+                    <td>$1860.00</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>104</td>
+                    <td>900</td>
+                    <td>2024-02-18</td>
+                    <td>Out-State</td>
+                    <td>$1.45</td>
+                    <td>$1305.00</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>105</td>
+                    <td>1100</td>
+                    <td>2024-02-20</td>
+                    <td>In-State</td>
+                    <td>$1.65</td>
+                    <td>$1815.00</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>106</td>
+                    <td>950</td>
+                    <td>2024-02-22</td>
+                    <td>Out-State</td>
+                    <td>$1.70</td>
+                    <td>$1615.00</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>107</td>
+                    <td>1300</td>
+                    <td>2024-02-25</td>
+                    <td>In-State</td>
+                    <td>$1.48</td>
+                    <td>$1924.00</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>108</td>
+                    <td>850</td>
+                    <td>2024-02-28</td>
+                    <td>Out-State</td>
+                    <td>$1.58</td>
+                    <td>$1343.00</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>109</td>
+                    <td>1000</td>
+                    <td>2024-03-02</td>
+                    <td>In-State</td>
+                    <td>$1.62</td>
+                    <td>$1620.00</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>110</td>
+                    <td>1150</td>
+                    <td>2024-03-05</td>
+                    <td>Out-State</td>
+                    <td>$1.53</td>
+                    <td>$1759.50</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
