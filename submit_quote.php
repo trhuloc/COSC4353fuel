@@ -1,5 +1,6 @@
 <?php
 // Check if the form is submitted
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate required fields
     if (empty($_POST["gallonsRequested"]) || empty($_POST["deliveryDate"])) {
