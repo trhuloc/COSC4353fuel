@@ -51,8 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Display error message and redirect back to form
         
         //header("Location: fuel_quote_form.html?error=required"); Delete comment code when done
-
-        exit();
+        echo "Please fill out the required information.";
+        
     }
 
     // Validate field types
@@ -61,15 +61,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Display error message and redirect back to form
         
         //header("Location: gallon_requested_validation.html");
-        exit();
+        echo "Gallons Requested must be larger than 0."
     }
 
     $deliveryDate = $_POST["deliveryDate"];
     $today = date("Y-m-d"); // Current date
     if ($deliveryDate < $today) {
         // Display error message and redirect back to form
-        header("Location: delivery_date_validation.html");
-        exit();
+        echo "Delivery Date must be valid."
     }
 
 
@@ -79,11 +78,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Gallons Requested must be a numeric value.";
     } else {
         // Perform calculations
-        $pricePerGallon = 2.3;
-        $totalAmountDue = $gallonsRequested * $pricePerGallon;
+       
+        
+        
+        $pricingModule = new PricingModule(2.3); // $1.50 per gallon
+        $totalPrice = $pricingModule->calculateTotalPrice($gallonsRequested); // 1000 gallons requested
+        echo "<h1>Total Amount Due: $totalPrice</h1>";
 
-        // Echo success message with HTML front end
-        echo "<h1>Total Amount Due: $totalAmountDue</h1>";
+        
     }
 } else {
     // Handle empty form data
