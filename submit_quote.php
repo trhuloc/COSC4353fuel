@@ -1,12 +1,57 @@
-<?php
-// Check if the form is submitted
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <title>Client Profile Management</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <style>
+        .taskbar {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .taskbar-button {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .taskbar-button:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="taskbar">
+        <a href="dashboard.html" class="taskbar-button">Dashboard</a>
+        <a href="fuel_quote_form.html" class="taskbar-button">Fuel Quote Form</a>
+        <a href="quote_history.html" class="taskbar-button">Fuel Quote History</a>
+        <a href="profile_management.php" class="taskbar-button">Profile Management</a>
+        <a href="logout.php" class="taskbar-button">Logout</a>
+    </div>
+</body>
+</html>
+<?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate required fields
+    // Retrieve form data
+    $gallonsRequested = $_POST["gallonsRequested"];
+    $deliveryDate = $_POST["deliveryDate"];
+
     if (empty($_POST["gallonsRequested"]) || empty($_POST["deliveryDate"])) {
         // Display error message and redirect back to form
         
-        header("Location: fuel_quote_form.html?error=required");
+        //header("Location: fuel_quote_form.html?error=required"); Delete comment code when done
+
         exit();
     }
 
@@ -14,8 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gallonsRequested = filter_var($_POST["gallonsRequested"], FILTER_VALIDATE_INT);
     if ($gallonsRequested === false || $gallonsRequested <= 0) {
         // Display error message and redirect back to form
-        //header("Location: fuel_quote_form.html?error=invalid");
-        header("Location: gallon_requested_validation.html");
+        
+        //header("Location: gallon_requested_validation.html");
         exit();
     }
 
@@ -28,36 +73,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
-    // Proceed with processing the form data
-    $deliveryDate = $_POST["deliveryDate"];
-    $pricePerGallon = 2.3; // Predefined price per gallon
+    // Validate Gallons Requested
+    if (!is_numeric($gallonsRequested)) {
+        // Handle validation error
+        echo "Gallons Requested must be a numeric value.";
+    } else {
+        // Perform calculations
+        $pricePerGallon = 2.3;
+        $totalAmountDue = $gallonsRequested * $pricePerGallon;
 
-    // Calculate total amount due
-    $totalAmountDue = $gallonsRequested * $pricePerGallon;
-
-    // Here you can save the submitted data to the database if needed
-
-    // Display a notification message
-    echo '<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Fuel Quote Form - Submission Confirmation</title>
-        <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-        <style>
-            .notification {
-                background-color: #4CAF50;
-                color: white;
-                text-align: center;
-                padding: 10px;
-                margin-top: 20px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="notification">Data submitted successfully!</div>
-    </body>
-    </html>';
-    exit();
+        // Echo success message with HTML front end
+        echo "<h1>Total Amount Due: $totalAmountDue</h1>";
+    }
+} else {
+    // Handle empty form data
+    echo "Please fill out the form.";
 }
 ?>
+

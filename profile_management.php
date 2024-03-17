@@ -1,3 +1,81 @@
+<?php
+// Validate and process form data
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve form data
+    $fullName = $_POST['fullName'];
+    $address1 = $_POST['address1'];
+    $address2 = $_POST['address2'];
+    $city = $_POST['city'];
+    $state = $_POST['state'];
+    $zipcode = $_POST['zipcode'];
+
+    // Perform validation
+    $isValid = true;
+
+    if (empty($fullName)) {
+        echo "Full Name is required.";
+        $isValid = false;
+    } elseif (strlen($fullName) > 50) {
+        echo "Full Name should not exceed 50 characters.";
+        $isValid = false;
+    }
+
+    if (empty($address1)) {
+        echo "Address 1 is required.";
+        $isValid = false;
+    } elseif (strlen($address1) > 100) {
+        echo "Address 1 should not exceed 100 characters.";
+        $isValid = false;
+    }
+
+    if (strlen($address2) > 100) {
+        echo "Address 2 should not exceed 100 characters.";
+        $isValid = false;
+    }
+
+    if (empty($city)) {
+        echo "City is required.";
+        $isValid = false;
+    } elseif (strlen($city) > 100) {
+        echo "City should not exceed 100 characters.";
+        $isValid = false;
+    }
+
+    if (empty($state)) {
+        echo "State is required.";
+        $isValid = false;
+    } elseif (strlen($state) !== 2) {
+        echo "Invalid State format.";
+        $isValid = false;
+    }
+
+    if (empty($zipcode)) {
+        echo "Zipcode is required.";
+        $isValid = false;
+    } elseif (!preg_match('/^[0-9]{5,9}$/', $zipcode)) {
+        echo "Invalid Zipcode format.";
+        $isValid = false;
+    }
+
+    // If the form data is valid, prepare data for persistence
+    if ($isValid) {
+        // Prepare data for database persistence
+        $data = [
+            'fullName' => $fullName,
+            'address1' => $address1,
+            'address2' => $address2,
+            'city' => $city,
+            'state' => $state,
+            'zipcode' => $zipcode
+        ];
+
+        // TODO: Persist data to the database
+
+        // Redirect to a success page
+        header("Location: profile_success.html");
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +111,7 @@
 
 <body>
     <div class="taskbar">
-        <a href="dashboard.php" class="taskbar-button">Dashboard</a>
+        <a href="dashboard.html" class="taskbar-button">Dashboard</a>
         <a href="fuel_quote_form.html" class="taskbar-button">Fuel Quote Form</a>
         <a href="quote_history.html" class="taskbar-button">Fuel Quote History</a>
         <a href="profile_management.php" class="taskbar-button">Profile Management</a>
@@ -41,7 +119,7 @@
     </div>
     <div class="container">
         <h2>Client Profile Management</h2>
-        <form action="profile_update.php" method="post">
+        <form action="profile_management.php" method="post">
             <label for="fullName">Full Name:</label><br>
             <input type="text" id="fullName" name="fullName" maxlength="50" required><br>
 
