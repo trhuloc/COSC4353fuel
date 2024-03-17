@@ -1,7 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
 
-class RegisterTest extends TestCase
+class regiesterTest extends TestCase
 {
     /**
      * @runInSeparateProcess

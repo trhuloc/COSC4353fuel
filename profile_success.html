@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>Client Profile Management</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Update Success</title>
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     <style>
         .taskbar {
@@ -30,7 +30,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="taskbar">
         <a href="dashboard.php" class="taskbar-button">Dashboard</a>
@@ -39,26 +38,10 @@
         <a href="profile_management.php" class="taskbar-button">Profile Management</a>
         <a href="logout.php" class="taskbar-button">Logout</a>
     </div>
+    <div class="container">
+        <h1>Profile Update Success</h1>
+        <p>Your profile has been successfully updated.</p>
+        <a href="dashboard.html">Return to Dashboard</a>
+    </div>
 </body>
 </html>
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve form data
-    $gallonsRequested = $_POST["gallonsRequested"];
-    $deliveryDate = $_POST["deliveryDate"];
-
-    // Validate Gallons Requested
-    if (!is_numeric($gallonsRequested)) {
-        // Handle validation error
-        echo "Gallons Requested must be a numeric value.";
-    } else {
-        // Perform calculations
-        $pricingModule = new PricingModule(2.3); // $1.50 per gallon
-        $totalPrice = $pricingModule->calculateTotalPrice($gallonsRequested); // 1000 gallons requested
-        echo "<h1>Total Amount Due: $totalPrice</h1>";
-    }
-} else {
-    // Handle empty form data
-    echo "Please fill out the form.";
-}
-?>
