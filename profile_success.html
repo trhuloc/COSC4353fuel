@@ -24,7 +24,19 @@
             background-color: #ddd;
             color: black;
         }
+        .dashboard-button {
+            float: left;
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
 
+        .dashboard-button:hover {
+            background-color: #000000;
+            color: black(0, 0, 0);
+        }
         .container {
             margin-top: 50px;
         }
@@ -39,9 +51,9 @@
         <a href="logout.php" class="taskbar-button">Logout</a>
     </div>
     <div class="container">
-        <h1>Profile Update Success</h1>
-        <p>Your profile has been successfully updated.</p>
-        <a href="dashboard.html">Return to Dashboard</a>
+        <h2>Profile Successfully Updated</h2>
+        
+        <a href="dashboard.php"> <input type="submit" value="Dashboard"> </a>
     </div>
 </body>
 </html>
