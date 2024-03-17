@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>Client Profile Management</title>
+    <title>Fuel Management System - Dashboard</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     <style>
@@ -30,7 +29,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="taskbar">
         <a href="dashboard.php" class="taskbar-button">Dashboard</a>
@@ -39,28 +37,31 @@
         <a href="profile_management.php" class="taskbar-button">Profile Management</a>
         <a href="logout.php" class="taskbar-button">Logout</a>
     </div>
+    <div class="container">
+        <h2>Welcome to the Dashboard</h2>
+        <div class="dashboard-content">
+            <div class="dashboard-item">
+                <h3>Total Fuel Quotes</h3>
+                <p>Today: 5</p>
+                <p>This Week: 25</p>
+                <p>This Month: 120</p>
+            </div>
+            <div class="dashboard-item">
+                <h3>Recent Fuel Quotes</h3>
+                <ul>
+                    <li>Quote ID: 12345 - Gallons Requested: 1000</li>
+                    <li>Quote ID: 12346 - Gallons Requested: 800</li>
+                    <li>Quote ID: 12347 - Gallons Requested: 1200</li>
+                </ul>
+            </div>
+            <div class="dashboard-item">
+                <h3>Upcoming Deliveries</h3>
+                <ul>
+                    <li>Client: John Doe - Delivery Date: 2024-03-01</li>
+                    <li>Client: Jane Smith - Delivery Date: 2024-03-03</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve form data
-    $gallonsRequested = $_POST["gallonsRequested"];
-    $deliveryDate = $_POST["deliveryDate"];
-
-    // Validate Gallons Requested
-    if (!is_numeric($gallonsRequested)) {
-        // Handle validation error
-        echo "Gallons Requested must be a numeric value.";
-    } else {
-        // Perform calculations
-        $pricePerGallon = 2.3;
-        $totalAmountDue = $gallonsRequested * $pricePerGallon;
-
-        // Echo success message with HTML front end
-        echo "<h1>Total Amount Due: $totalAmountDue</h1>";
-    }
-} else {
-    // Handle empty form data
-    echo "Please fill out the form.";
-}
-?>
