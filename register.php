@@ -1,3 +1,25 @@
+<?php
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve the submitted username and password
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    // Validate the input (you can add more validation logic here)
+    if (empty($username) || empty($password)) {
+        $error_message = "Please fill in all the fields.";
+    } elseif (strlen($password) < 8) {
+        $error_message = "Password must have at least 8 characters.";
+    } else {
+        // Perform the registration process (you can add your own logic here)
+        // For example, you can store the user details in a database
+
+        // Display a success message
+        $success_message = "Registration successful!";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,8 +36,13 @@
         if (isset($error_message)) {
             echo "<p style='color: red;'>$error_message</p>";
         }
+
+        // Display success message if registration is successful
+        if (isset($success_message)) {
+            echo "<p style='color: green;'>$success_message</p>";
+        }
         ?>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form action="register.php" method="post">
             <label for="username">Username:</label><br>
             <input type="text" id="username" name="username" data-validate="required"><br>
             <label for="password">Password:</label><br>
