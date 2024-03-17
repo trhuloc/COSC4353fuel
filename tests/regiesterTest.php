@@ -3,6 +3,9 @@ use PHPUnit\Framework\TestCase;
 
 class RegisterTest extends TestCase
 {
+    /**
+     * @runInSeparateProcess
+     */
     public function testRegistrationSuccess()
     {
         $_POST["username"] = "john";
@@ -36,7 +39,7 @@ class RegisterTest extends TestCase
         include "register.php";
         $output = ob_get_clean();
 
-        $this->assertStringContainsString("Password must have at least 8 characters.", $output);
+        $this->assertStringContainsString("Password must be at least 8 characters long.", $output);
     }
 
 }

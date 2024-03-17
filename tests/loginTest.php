@@ -28,19 +28,21 @@ class loginTest extends TestCase
 
         $this->assertStringContainsString("Invalid username or password.", $output,  "testString doesn't contains 'geeks' as substring");
     }
+    /**
+     * @runInSeparateProcess
+     */
+    public function testSuccessfulLogin()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_POST['username'] = 'admin';
+        $_POST['password'] = 'password';
 
-//     public function testSuccessfulLogin()
-//     {
-//         $_SERVER['REQUEST_METHOD'] = 'POST';
-//         $_POST['username'] = 'admin';
-//         $_POST['password'] = 'password';
+        ob_start();
+        include 'login.php';
+        $output = ob_get_clean();
 
-//         ob_start();
-//         include 'login.php';
-//         $output = ob_get_clean();
-
-//         $expected = "Login successful!";
-//         $this->assertStringContainsString($expected, $output,  $output) ;
-//     }
+        $expected = "Login successful!";
+        $this->assertStringContainsString($expected, $output,  $output) ;
+    }
     }
 ?>

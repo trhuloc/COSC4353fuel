@@ -37,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Successful login
             echo "<p>Login successful!</p>";
             header("Location: dashboard.html"); // Redirect to dashboard.html
-            exit; // Terminate the script
         } else {
             // Invalid credentials
             echo "<p>Invalid username or password.</p>";
