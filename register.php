@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="username">Username:</label><br>
             <input type="text" id="username" name="username" data-validate="required"><br>
             <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password" data-validate="required"><br><br>
+            <input type="password" class = "form-control" id="password" name="password" pattern="(?=.*\d)(?=.*[\W_]).{7,}" title="Minimum of 7 characters. Should have at least one special character and one number." data-validate="required"><br>
             <input type="submit" value="Register">
         </form>
         <p>Already have an account? <a href="login.php">Login</a></p>
