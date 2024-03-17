@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Display a success message
         $success_message = "Registration successful!";
+        header("Location: register_success.html");
     }
 }
 ?>
