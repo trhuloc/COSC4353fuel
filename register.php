@@ -8,7 +8,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate the input (you can add more validation logic here)
     if (empty($username) || empty($password)) {
         $error_message = "Please fill in all the fields.";
-    } else {
+    }elseif (strlen($password) < 8) {
+        $error_message = "Password must be at least 8 characters long.";
+    }else {
         // Perform the registration process (you can add your own logic here)
         // For example, you can store the user details in a database
 
