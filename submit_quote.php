@@ -61,14 +61,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Display error message and redirect back to form
         
         //header("Location: gallon_requested_validation.html");
-        echo "Gallons Requested must be larger than 0."
+        echo "Gallons Requested must be larger than 0.";
     }
 
     $deliveryDate = $_POST["deliveryDate"];
     $today = date("Y-m-d"); // Current date
     if ($deliveryDate < $today) {
         // Display error message and redirect back to form
-        echo "Delivery Date must be valid."
+        echo "Delivery Date must be valid.";
     }
 
 
