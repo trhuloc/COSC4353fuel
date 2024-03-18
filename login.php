@@ -21,7 +21,6 @@
 </body>
 </html>
 <?php
-session_start();
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -36,15 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     else {
         // Perform authentication (you can replace this with your own authentication logic)
         if ($username === 'admin' && $password === 'password') {
-            // Successful login
-            $_SESSION['username'] = $username;
-
-            // Encrypt the username using a simple hash encryption
             $encryptedUsername = md5($username);
-
-            // Store the encrypted username in a session variable
-            $_SESSION['encryptedUsername'] = $encryptedUsername;
-
             echo "<p>Login successful!</p>";
             header("Location: dashboard.php"); // Redirect to dashboard.html
         } else {

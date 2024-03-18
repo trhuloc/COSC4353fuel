@@ -26,8 +26,9 @@ class loginTest extends TestCase
         include 'login.php';
         $output = ob_get_clean();
 
-        $this->assertStringContainsString("Invalid username or password.", $output,  "testString doesn't contains 'geeks' as substring");
+        $this->assertStringContainsString("Invalid username or password.", $output);
     }
+
     /**
      * @runInSeparateProcess
      */
@@ -42,7 +43,7 @@ class loginTest extends TestCase
         $output = ob_get_clean();
 
         $expected = "Login successful!";
-        $this->assertStringContainsString($expected, $output,  $output) ;
+        $this->assertStringContainsString($expected, $output);
     }
-    }
+}
 ?>

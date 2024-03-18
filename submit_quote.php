@@ -1,3 +1,4 @@
+use PricingModule; // Add the missing import statement
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,6 +43,7 @@
 </body>
 </html>
 <?php
+require_once 'Pricing.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $gallonsRequested = $_POST["gallonsRequested"];
@@ -50,7 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["gallonsRequested"]) || empty($_POST["deliveryDate"])) {
         // Display error message and redirect back to form
         
-        //header("Location: fuel_quote_form.html?error=required"); Delete comment code when done
         echo "Please fill out the required information.";
         
     }
@@ -60,15 +61,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($gallonsRequested === false || $gallonsRequested <= 0) {
         // Display error message and redirect back to form
         
-        //header("Location: gallon_requested_validation.html");
-        echo "Gallons Requested must be larger than 0."
+        echo "Gallons Requested must be larger than 0.";
     }
 
     $deliveryDate = $_POST["deliveryDate"];
     $today = date("Y-m-d"); // Current date
     if ($deliveryDate < $today) {
         // Display error message and redirect back to form
-        echo "Delivery Date must be valid."
+        echo "Delivery Date must be valid.";
     }
 
 
@@ -86,5 +86,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle empty form data
     echo "Please fill out the form.";
 }
-?>
 
