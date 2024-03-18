@@ -22,6 +22,10 @@
 </html>
 <?php
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start(); // Start the session if it is not already active
+}
+
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the form data
@@ -36,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Perform authentication (you can replace this with your own authentication logic)
         if ($username === 'admin' && $password === 'password') {
             $encryptedUsername = md5($username);
+            $_SESSION['username'] = $encryptedUsername; // Store the username in the session
             echo "<p>Login successful!</p>";
             header("Location: dashboard.php"); // Redirect to dashboard.html
         } else {

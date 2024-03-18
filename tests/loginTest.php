@@ -3,6 +3,9 @@ use PHPUnit\Framework\TestCase;
 
 class loginTest extends TestCase
 {
+    /**
+     * @runInSeparateProcess
+     */
     public function testEmptyFields()
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
@@ -16,6 +19,9 @@ class loginTest extends TestCase
         $this->assertStringContainsString("Please enter both username and password.", $output);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testInvalidCredentials()
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
