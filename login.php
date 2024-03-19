@@ -25,28 +25,54 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start(); // Start the session if it is not already active
 }
+include 'db.php';
 
-// Check if the form is submitted
+// Attempt to establish a connection to the database
+$mysqli = new mysqli($host, $username, $password, $dbname, $port);
+
+// Check if the connection was successful
+if ($mysqli->connect_error) {
+    //die("Connection failed: " . $mysqli->connect_error);
+    // Print message if connection fails
+    echo "<p>Failed to connect to the database.</p>";
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the form data
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Validate the form data (you can add more validations as per your requirements)
+    // Validate the form data
     if (empty($username) || empty($password)) {
         echo "<p>Please enter both username and password.</p>";
-    } 
-    else {
-        // Perform authentication (you can replace this with your own authentication logic)
-        if ($username === 'admin' && $password === 'password') {
-            $encryptedUsername = md5($username);
-            $_SESSION['username'] = $encryptedUsername; // Store the username in the session
-            echo "<p>Login successful!</p>";
-            header("Location: dashboard.php"); // Redirect to dashboard.html
+    } else {
+        // Perform authentication
+        $sql = "SELECT UserID, Username, Password FROM usercredentials WHERE Username = ?";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            // Verify password
+            if (password_verify($password, $row['Password'])) {
+                $_SESSION['UserID'] = $row['UserID'];
+                $_SESSION['Username'] = $row['Username'];
+                $_SESSION['ProfileUpdated'] = $row['ProfileUpdated'];
+                echo "<p>Login successful!</p>";
+                header("Location: dashboard.php"); // Redirect to dashboard
+                exit();
+            } else {
+                // Invalid password
+                echo "<p>Invalid username or password.</p>";
+            }
         } else {
-            // Invalid credentials
+            // User not found
             echo "<p>Invalid username or password.</p>";
         }
+
+        $stmt->close();
     }
+
+    $mysqli->close(); // Close the database connection
 }
 ?>
