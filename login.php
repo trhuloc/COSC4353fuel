@@ -28,7 +28,7 @@ if (session_status() === PHP_SESSION_NONE) {
 include 'db.php';
 
 // Attempt to establish a connection to the database
-$mysqli = new mysqli($host, $username, $password, $dbname, $port);
+// $mysqli = new mysqli($host, $username, $password, $dbname, $port);
 
 // Check if the connection was successful
 if ($mysqli->connect_error) {
@@ -72,7 +72,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $stmt->close();
     }
-
-    $mysqli->close(); // Close the database connection
 }
 ?>
