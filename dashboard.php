@@ -1,12 +1,3 @@
-<?php
-session_start();
-
-// Check if user is logged in
-if (!isset($_SESSION['username']) || empty($_SESSION['username']) || !isset($_SESSION['encryptedUsername']) || empty($_SESSION['encryptedUsername'])){
-    header("Location: login.php");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
