@@ -35,5 +35,5 @@ phpunit ./tests
 
 After the installation is complete you could run this command to generate the report
 
-phpunit --coverage-html ./coverage ./tests
+XDEBUG_MODE=coverage phpunit --coverage-html ./coverage ./tests
 
