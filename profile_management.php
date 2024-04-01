@@ -32,8 +32,21 @@
 <body>
 <?php
 // Include the database connection file
+require_once 'Pricing.php';
 require_once 'db.php';
-
+if (session_status() === PHP_SESSION_NONE) {
+    @session_start();
+}
+if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
+    header("Location: login.php");
+}
+else {
+    $username = $_SESSION['username'];
+}
+if(!isset($_SESSION['username']))
+{
+    $username = "testuser";
+}
 // Validate and process form data
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve form data
@@ -95,17 +108,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // If the form data is valid, prepare data for update
     if ($isValid) {
-        // Retrieve the UserID of the currently logged-in user
-        if(session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        if (!isset($_SESSION['username'])) {
-            // Redirect to the login page if not logged in
-            header("Location: login.php");
-            exit(); // Stop further execution
-        }
-        $username = $_SESSION['username'];
-
         $stmt = $mysqli->prepare("SELECT UserID FROM usercredentials WHERE Username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();

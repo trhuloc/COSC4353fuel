@@ -43,11 +43,6 @@
             // Handle validation error
             echo "Gallons Requested must be a numeric value.";
         } else {
-            // Perform calculations
-            $pricingModule = new PricingModule(2.3); // $1.50 per gallon
-            $totalPrice = $pricingModule->calculateTotalPrice($gallonsRequested); // 1000 gallons requested
-            echo "<h1>Total Amount Due: $totalPrice</h1>";
-
             // Get UserID from clientcredentials table
             $stmt = $mysqli->prepare("SELECT UserID FROM usercredentials WHERE Username = ?");
             $stmt->bind_param("s", $username);
@@ -55,6 +50,27 @@
             $stmt->bind_result($userID);
             $stmt->fetch();
             $stmt->close();
+
+            $pricingModule = new PricingModule(1.5); // $1.50 per gallon
+            //get $location by select statecode in  clientcredentials table
+            $stmt = $mysqli->prepare("SELECT StateCode FROM clientinformation WHERE UserID = ?");
+            $stmt->bind_param("s", $userID);
+            $stmt->execute();
+            $stmt->bind_result($location);
+            $stmt->fetch();
+            $stmt->close();
+            //get $hasHistory by select count(*) in fuelquote table
+            $stmt = $mysqli->prepare("SELECT count(*) FROM fuelquote WHERE UserID = ?");
+            $stmt->bind_param("s", $userID);
+            $stmt->execute();
+            $stmt->bind_result($hasHistory);
+            $stmt->fetch();
+            $stmt->close();
+            if($hasHistory > 0)
+                $hasHistory = 1;
+            else
+                $hasHistory = 0;
+            $totalPrice = $pricingModule->calculateTotalPrice($gallonsRequested,$location,$hasHistory);
 
             // Insert into database
             $stmt = $mysqli->prepare("INSERT INTO fuelquote (UserID, GallonsRequested, DeliveryDate, TotalAmountDue) VALUES (?, ?, ?, ?)");
@@ -106,4 +122,7 @@
         <a href="fuel_quote_form.html" class="taskbar-button">Fuel Quote Form</a>
         <a href="quote_history.html" class="taskbar-button">Fuel Quote History</a>
         <a href="profile_management.php" class="taskbar-button">Profile Management</a>
-        <a href="logout.php"
+        <a href="logout.php" class="taskbar-button">Logout</a>
+    </div>
+</body>
+</html>

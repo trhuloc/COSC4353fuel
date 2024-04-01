@@ -21,7 +21,7 @@ SET @@SESSION.SQL_LOG_BIN= 0;
 -- GTID state at the beginning of the backup 
 --
 
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '16746f8a-cb70-11ee-b60c-000d3aa60a10:1-4';
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '16746f8a-cb70-11ee-b60c-000d3aa60a10:1-56';
 
 --
 -- Table structure for table `clientinformation`
@@ -42,7 +42,7 @@ CREATE TABLE `clientinformation` (
   PRIMARY KEY (`ClientID`),
   UNIQUE KEY `UserID` (`UserID`),
   CONSTRAINT `clientinformation_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `usercredentials` (`UserID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,6 +51,7 @@ CREATE TABLE `clientinformation` (
 
 LOCK TABLES `clientinformation` WRITE;
 /*!40000 ALTER TABLE `clientinformation` DISABLE KEYS */;
+INSERT INTO `clientinformation` VALUES (1,11,'loc','123 Main St','Apt 101','Anytown','NY','12345'),(4,17,'Loc Trinh','3722 CYPRESS KEY DR','','Spring','TX','77388'),(5,21,'Loc ','3722 CYPRESS KEY DR','','winter','TX','77388');
 /*!40000 ALTER TABLE `clientinformation` ENABLE KEYS */;
 UNLOCK TABLES;
 SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
@@ -64,4 +65,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-18 18:38:39
+-- Dump completed on 2024-04-01 17:39:06

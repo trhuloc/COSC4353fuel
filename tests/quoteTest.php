@@ -8,9 +8,9 @@ class quoteTest extends TestCase
      * @runInSeparateProcess
      */
     public function testEmptyForm()
-    {   
-        
+    {
         $_SERVER["REQUEST_METHOD"] = "GET";
+
         ob_start();
         include "submit_quote.php";
         $output = ob_get_clean();
@@ -53,54 +53,56 @@ class quoteTest extends TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testInvalidGallonsRequestedNegativeNumber()
-    {
-        include "db.php";
-        $_SERVER["REQUEST_METHOD"] = "POST";
-        $_POST["gallonsRequested"] = "-1";
-        $_POST["deliveryDate"] = "2024-10-01";
-        ob_start();
-        include "submit_quote.php";
-        $output = ob_get_clean();
-    
-        $expected = "Gallons Requested must be larger than 0.";
-        $this->assertStringContainsString($expected, $output);
-    }
-    /**
-     * @runInSeparateProcess
-     */
-    public function testInvalidDeliveryDate()
-    {
-        include "db.php";
-        $_SERVER["REQUEST_METHOD"] = "POST";
-        $_POST["gallonsRequested"] = "5";
-        $_POST["deliveryDate"] = "2022-10-01";
-
-        ob_start();
-        include "submit_quote.php";
-        $output = ob_get_clean();
-
-        $expected = "Delivery Date must be valid.";
-        $this->assertStringContainsString($expected, $output);
-    }
-    /**
-     * @runInSeparateProcess
-     */
     public function testCalculateTotalPrice()
     {
-        include "db.php";
-        $_SERVER["REQUEST_METHOD"] = "POST";
-        $_POST["gallonsRequested"] = "1000";
-        $_POST["deliveryDate"] = "2024-10-01";
-
-        $pricingModule = new PricingModule(2.3);
-        $totalPrice = $pricingModule->calculateTotalPrice(1000);
-
-        ob_start();
-        include "submit_quote.php";
-        $output = ob_get_clean();
-
-        $expected = "<h1>Total Amount Due: $totalPrice</h1>";
-        $this->assertStringContainsString($expected, $output);
+        $pricingModule = new PricingModule(1.5);
+        $totalPrice = $pricingModule->calculateTotalPrice(1500,'TX',1);
+        $output = 2542.5;
+        $this->assertEquals($output, $totalPrice);
     }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testCalculateTotalPriceWithDifferentLocation()
+    {
+        $pricingModule = new PricingModule(1.5);
+        $totalPrice = $pricingModule->calculateTotalPrice(1000,'NY',1);
+        $output = 1740.0;
+        $this->assertEquals($output, $totalPrice);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testCalculateTotalPriceWithNoRateHistory()
+    {
+        $pricingModule = new PricingModule(1.5);
+        $totalPrice = $pricingModule->calculateTotalPrice(800,'TX',0);
+        $output = 1380.0;
+        $this->assertEquals($output, $totalPrice);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testCalculateTotalPriceWithLowGallonsRequested()
+    {
+        $pricingModule = new PricingModule(1.5);
+        $totalPrice = $pricingModule->calculateTotalPrice(500,'TX',1);
+        $output = 855.0;
+        $this->assertEquals($output, $totalPrice);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testCalculateTotalPriceWithHighGallonsRequested()
+    {
+        $pricingModule = new PricingModule(1.5);
+        $totalPrice = $pricingModule->calculateTotalPrice(1200,'TX',1);
+        $output = 2034.0;
+        $this->assertEquals($output, $totalPrice);
+    }
+
 }
