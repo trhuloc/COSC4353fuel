@@ -1,4 +1,7 @@
 <?php
+// Include the database connection file
+require_once 'db.php';
+
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve the submitted username and password
@@ -7,16 +10,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate the input (you can add more validation logic here)
     if (empty($username) || empty($password)) {
-        $error_message = "Please fill in all the fields.";
-    }elseif (strlen($password) < 8) {
-        $error_message = "Password must be at least 8 characters long.";
-    }else {
-        // Perform the registration process (you can add your own logic here)
-        // For example, you can store the user details in a database
+        echo "<p style='color: red;'>Please fill in all the fields.</p>";
+    } elseif (strlen($password) < 8) {
+        echo "<p style='color: red;'>Password must be at least 8 characters long.</p>";
+    } else {
+        // Check if the username already exists
+        $check_stmt = $mysqli->prepare("SELECT UserID FROM usercredentials WHERE Username = ?");
+        $check_stmt->bind_param("s", $username);
+        $check_stmt->execute();
+        $check_stmt->store_result();
+        
+        if ($check_stmt->num_rows > 0) {
+            echo "<p style='color: red;'>Username already exists. Please choose a different one.</p>";
+        } else {
+            // Hash the password
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // Display a success message
-        $success_message = "Registration successful!";
-        header("Location: register_success.html");
+            // Perform the registration process
+            // Prepare and execute the SQL statement
+            $insert_stmt = $mysqli->prepare("INSERT INTO usercredentials (Username, Password) VALUES (?, ?)");
+            $insert_stmt->bind_param("ss", $username, $hashed_password);
+            
+            if ($insert_stmt->execute()) {
+                // Display a success message
+                echo "Registration successful!";
+            } else {
+                echo "<p style='color: red;'>Registration failed. Please try again.</p>";
+            }
+        }
     }
 }
 ?>

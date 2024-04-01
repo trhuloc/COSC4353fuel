@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,32 +21,47 @@
     </div>
 </body>
 </html>
-<?php
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start(); // Start the session if it is not already active
-}
+<?php
+// Include the database connection file
+require_once 'db.php';
 
 // Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the form data
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve the submitted username and password
+    $username = $_POST["username"];
+    $password = $_POST["password"];
 
-    // Validate the form data (you can add more validations as per your requirements)
+    // Validate the input (you can add more validation logic here)
     if (empty($username) || empty($password)) {
-        echo "<p>Please enter both username and password.</p>";
-    } 
-    else {
-        // Perform authentication (you can replace this with your own authentication logic)
-        if ($username === 'admin' && $password === 'password') {
-            $encryptedUsername = md5($username);
-            $_SESSION['username'] = $encryptedUsername; // Store the username in the session
-            echo "<p>Login successful!</p>";
-            header("Location: dashboard.php"); // Redirect to dashboard.html
+        echo "Please enter both username and password.";
+    } else {
+        // Retrieve the hashed password from the database
+        $stmt = $mysqli->prepare("SELECT UserID, Password FROM usercredentials WHERE Username = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows == 1) {
+            // Username exists, fetch the hashed password
+            $row = $result->fetch_assoc();
+            $hashed_password = $row['Password'];
+
+            // Verify the password
+            if (password_verify($password, $hashed_password)) {
+                // Password is correct, start the session and store the username
+                session_start();
+                $_SESSION['username'] = $username;
+                // Redirect to dashboard or any other page after successful login
+                header("Location: dashboard.php");
+                exit(); // Stop further execution after redirection
+            } else {
+                // Invalid password
+                echo "Invalid username or password.";
+            }
         } else {
-            // Invalid credentials
-            echo "<p>Invalid username or password.</p>";
+            // Invalid username
+            echo "Invalid username or password.";
         }
     }
 }
