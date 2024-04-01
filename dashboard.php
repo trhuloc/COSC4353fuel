@@ -1,3 +1,25 @@
+<?php
+@session_start();
+require_once 'db.php';
+
+if (!isset($_SESSION['username'])) {
+    header("Location: index.html");
+    exit(); // Stop further execution
+}
+
+$username = $_SESSION['username'];
+
+$stmt = $mysqli->prepare("SELECT UserID FROM usercredentials WHERE Username = ?");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$stmt->store_result();
+if ($stmt->num_rows == 0) {
+    header("Location: index.html");
+    exit();
+}
+$stmt->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,27 +62,7 @@
     <div class="container">
         <h2>Welcome to the Dashboard</h2>
         <div class="dashboard-content">
-            <div class="dashboard-item">
-                <h3>Total Fuel Quotes</h3>
-                <p>Today: 5</p>
-                <p>This Week: 25</p>
-                <p>This Month: 120</p>
-            </div>
-            <div class="dashboard-item">
-                <h3>Recent Fuel Quotes</h3>
-                <ul>
-                    <li>Quote ID: 12345 - Gallons Requested: 1000</li>
-                    <li>Quote ID: 12346 - Gallons Requested: 800</li>
-                    <li>Quote ID: 12347 - Gallons Requested: 1200</li>
-                </ul>
-            </div>
-            <div class="dashboard-item">
-                <h3>Upcoming Deliveries</h3>
-                <ul>
-                    <li>Client: John Doe - Delivery Date: 2024-03-01</li>
-                    <li>Client: Jane Smith - Delivery Date: 2024-03-03</li>
-                </ul>
-            </div>
+            <!-- Your dashboard content here -->
         </div>
     </div>
 </body>

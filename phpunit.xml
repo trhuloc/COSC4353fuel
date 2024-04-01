@@ -6,6 +6,8 @@
         <exclude>
             <directory suffix=".php">./vendor</directory>
             <file>logout.php</file>
+            <file>dashboard.php</file>
+            <file>session.php</file>
         </exclude>
     </coverage>
 </phpunit>

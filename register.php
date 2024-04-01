@@ -1,3 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Fuel Management System - Register</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <?php
+        // Display error message if there's any
+        if (isset($error_message)) {
+            echo "<p style='color: red;'>$error_message</p>";
+        }
+
+        // Display success message if registration is successful
+        if (isset($success_message)) {
+            echo "<p style='color: green;'>$success_message</p>";
+        }
+        ?>
+        <form action="register.php" method="post">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" data-validate="required"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" data-validate="required"><br><br>
+            <input type="submit" value="Register">
+        </form>
+        <p>Already have an account? <a href="login.php">Login</a></p>
+    </div>
+</body>
+</html>
 <?php
 // Include the database connection file
 require_once 'db.php';
@@ -34,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($insert_stmt->execute()) {
                 // Display a success message
                 echo "Registration successful!";
+                header("Location: register_success.html");
             } else {
                 echo "<p style='color: red;'>Registration failed. Please try again.</p>";
             }
@@ -41,37 +75,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Fuel Management System - Register</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <h2>Register</h2>
-        <?php
-        // Display error message if there's any
-        if (isset($error_message)) {
-            echo "<p style='color: red;'>$error_message</p>";
-        }
-
-        // Display success message if registration is successful
-        if (isset($success_message)) {
-            echo "<p style='color: green;'>$success_message</p>";
-        }
-        ?>
-        <form action="register.php" method="post">
-            <label for="username">Username:</label><br>
-            <input type="text" id="username" name="username" data-validate="required"><br>
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password" data-validate="required"><br><br>
-            <input type="submit" value="Register">
-        </form>
-        <p>Already have an account? <a href="login.php">Login</a></p>
-    </div>
-</body>
-</html>

@@ -2,13 +2,15 @@
 use PHPUnit\Framework\TestCase;
 
 require_once "Pricing.php";
-
 class quoteTest extends TestCase
 {
+    /**
+     * @runInSeparateProcess
+     */
     public function testEmptyForm()
-    {
+    {   
+        
         $_SERVER["REQUEST_METHOD"] = "GET";
-
         ob_start();
         include "submit_quote.php";
         $output = ob_get_clean();
@@ -16,7 +18,9 @@ class quoteTest extends TestCase
         $expected = "Please fill out the form.";
         $this->assertStringContainsString($expected, $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testEmptyFields()
     {
         $_SERVER["REQUEST_METHOD"] = "POST";
@@ -30,7 +34,9 @@ class quoteTest extends TestCase
         $expected = "Please fill out the required information.";
         $this->assertStringContainsString($expected, $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testInvalidGallonsRequested()
     {
         $_SERVER["REQUEST_METHOD"] = "POST";
@@ -44,23 +50,28 @@ class quoteTest extends TestCase
         $expected = "Gallons Requested must be a numeric value.";
         $this->assertStringContainsString($expected, $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testInvalidGallonsRequestedNegativeNumber()
     {
+        include "db.php";
         $_SERVER["REQUEST_METHOD"] = "POST";
         $_POST["gallonsRequested"] = "-1";
         $_POST["deliveryDate"] = "2024-10-01";
-
         ob_start();
         include "submit_quote.php";
         $output = ob_get_clean();
-
+    
         $expected = "Gallons Requested must be larger than 0.";
         $this->assertStringContainsString($expected, $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testInvalidDeliveryDate()
     {
+        include "db.php";
         $_SERVER["REQUEST_METHOD"] = "POST";
         $_POST["gallonsRequested"] = "5";
         $_POST["deliveryDate"] = "2022-10-01";
@@ -72,9 +83,12 @@ class quoteTest extends TestCase
         $expected = "Delivery Date must be valid.";
         $this->assertStringContainsString($expected, $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testCalculateTotalPrice()
     {
+        include "db.php";
         $_SERVER["REQUEST_METHOD"] = "POST";
         $_POST["gallonsRequested"] = "1000";
         $_POST["deliveryDate"] = "2024-10-01";
