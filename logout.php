@@ -1,13 +1,9 @@
 <?php
-session_start(); // Start the session
+@session_start();
 
-// Unset all of the session variables
-$_SESSION = array();
+if (session_status() === PHP_SESSION_ACTIVE)
+    session_destroy();
 
-// Destroy the session
-session_destroy();
-
-// Redirect to the login page
-header("Location: login.php");
-exit;
+// Redirect to login page
+header("Location: index.html");
 ?>

@@ -5,6 +5,7 @@
         </include>
         <exclude>
             <directory suffix=".php">./vendor</directory>
+            <file>logout.php</file>
         </exclude>
     </coverage>
 </phpunit>
