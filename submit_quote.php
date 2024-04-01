@@ -88,9 +88,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Client Profile Management</title>
+    <title>Fuel Quote Form</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <script src="fuel_quote_form.js" defer></script>
     <style>
         .taskbar {
             background-color: #333;
@@ -119,10 +120,35 @@
 <body>
     <div class="taskbar">
         <a href="dashboard.php" class="taskbar-button">Dashboard</a>
-        <a href="fuel_quote_form.html" class="taskbar-button">Fuel Quote Form</a>
+        <a href="submit_quote.html" class="taskbar-button">Fuel Quote Form</a>
         <a href="quote_history.html" class="taskbar-button">Fuel Quote History</a>
         <a href="profile_management.php" class="taskbar-button">Profile Management</a>
         <a href="logout.php" class="taskbar-button">Logout</a>
     </div>
+    <div class="container">
+        <h2>Fuel Quote Form</h2>
+        <form action="submit_quote.php" method="post">
+            
+            <label for="gallonsRequested">Gallons Requested:</label>
+            <input type="number" id="gallonsRequested" name="gallonsRequested" min="1" value="0" required><br>
+            <span id="test"></span><br>
+
+            <label for="deliveryAddress">Delivery Address:</label>
+            <input type="text" id="deliveryAddress" name="deliveryAddress" value="In-state" readonly ><br>
+
+            
+            <label for="deliveryDate">Delivery Date:</label>
+            <input type="date" id="deliveryDate" name="deliveryDate" required><br>
+            
+            <label for="suggestedPrice">Suggested Price / Gallon:</label>
+            <input type="number" id="suggestedPrice" name="suggestedPrice" readonly step="0.01" ><br>
+            
+            <label for="totalAmountDue">Total Amount Due:</label>
+            <input type="number" id="totalAmountDue" name="totalAmountDue" readonly step="0.01" ><br>
+            
+            <input type="submit" value="Submit Quote">
+        </form>
+    </div>
 </body>
+
 </html>
