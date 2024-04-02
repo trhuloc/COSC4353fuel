@@ -83,6 +83,7 @@
                 $hasHistory = 0;
             }
             $totalPrice = $pricingModule->calculateTotalPrice($gallonsRequested, $location, $hasHistory);
+            $location = $_SESSION['location'];
             if ($location == "TX") {
                 $instate = "In State";
             } else {
@@ -109,16 +110,17 @@
             <input type="submit" value="Submit Quote" id="submitQuoteBtn">
         </form>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#submitQuoteBtn").click(function() {
+                $("#quoteForm").attr("action", "submit_quote.php").submit();
+            });
+        });
+    </script>
 </body>
 </html>
 
-<?php
-    $stmt = $mysqli->prepare("INSERT INTO fuelquote (UserID, GallonsRequested, DeliveryDate, TotalAmountDue) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("iiss", $userID, $gallonsRequested, $deliveryDate, $totalPrice);
-    $stmt->execute();
-    $stmt->close();
-    $suggestedPrice = $totalPrice/$gallonsRequested;
-    header("Location: quote_success.html");
-?>
+
 
 

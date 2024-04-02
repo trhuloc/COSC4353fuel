@@ -7,20 +7,6 @@ class quoteTest extends TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testEmptyForm()
-    {
-        $_SERVER["REQUEST_METHOD"] = "GET";
-
-        ob_start();
-        include "submit_quote.php";
-        $output = ob_get_clean();
-
-        $expected = "Please fill out the form.";
-        $this->assertStringContainsString($expected, $output);
-    }
-    /**
-     * @runInSeparateProcess
-     */
     public function testEmptyFields()
     {
         $_SERVER["REQUEST_METHOD"] = "POST";

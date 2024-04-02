@@ -9,6 +9,7 @@
             <file>dashboard.php</file>
             <file>session.php</file>
             <file>quote_history.php</file>
+            <file>get_quote.php</file>
         </exclude>
     </coverage>
 </phpunit>

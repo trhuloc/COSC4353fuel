@@ -17,8 +17,21 @@ if ($stmt->num_rows == 0) {
     header("Location: index.html");
     exit();
 }
+$stmt->bind_result($userID);
+$stmt->fetch();
 $stmt->close();
+
+// Get state code
+$stmt = $mysqli->prepare("SELECT StateCode FROM clientinformation WHERE UserID = ?");
+$stmt->bind_param("i", $userID); // Assuming UserID is an integer
+$stmt->execute();
+$stmt->bind_result($location);
+$stmt->fetch();
+$stmt->close();
+
+$_SESSION['location'] = $location;
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
