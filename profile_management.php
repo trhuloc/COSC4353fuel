@@ -39,14 +39,26 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
     header("Location: login.php");
-}
-else {
+    exit;
+} else {
     $username = $_SESSION['username'];
 }
-if(!isset($_SESSION['username']))
-{
+if (!isset($_SESSION['username'])) {
     $username = "testuser";
 }
+$stmt = $mysqli->prepare("SELECT UserID FROM usercredentials WHERE Username = ?");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$stmt->bind_result($userID);
+$stmt->fetch();
+$stmt->close();
+
+$stmt = $mysqli->prepare("SELECT * FROM clientinformation WHERE UserID = ?");
+$stmt->bind_param("i", $userID);
+$stmt->execute();
+$result = $stmt->get_result();
+$clientData = $result->fetch_assoc();
+$stmt->close();
 // Validate and process form data
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve form data
@@ -108,20 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // If the form data is valid, prepare data for update
     if ($isValid) {
-        $stmt = $mysqli->prepare("SELECT UserID FROM usercredentials WHERE Username = ?");
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $stmt->bind_result($userID);
-        $stmt->fetch();
-        $stmt->close();
-
         // Check if the user already has data in the clientinformation table
-        $stmt = $mysqli->prepare("SELECT * FROM clientinformation WHERE UserID = ?");
-        $stmt->bind_param("i", $userID);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $clientData = $result->fetch_assoc();
-        $stmt->close();
         // If user already has data, update it in the database
         if ($clientData) {
             $stmt = $mysqli->prepare("UPDATE clientinformation SET FullName = ?, Address1 = ?, Address2 = ?, City = ?, StateCode = ?, Zipcode = ? WHERE UserID = ?");
@@ -136,11 +135,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->close();
         }
 
-        $stmt = $mysqli->prepare("UPDATE usercredentials SET ProfileUpdated = 1 WHERE UserID = ?");
-        $stmt->bind_param("i", $userID);
-        $stmt->execute();
-        $stmt->close();
-
         // Redirect to a success page
         header("Location: profile_success.html");
         exit();
@@ -152,7 +146,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Retrieve client information from the database
 $stmt = $mysqli->prepare("SELECT * FROM clientinformation WHERE UserID = ?");
 $stmt->bind_param("i", $userID);
 $stmt->execute();
@@ -160,15 +153,15 @@ $result = $stmt->get_result();
 $clientData = $result->fetch_assoc();
 $stmt->close();
 ?>
-
-<h2>Edit Client Information</h2>
-<div class="taskbar">
+    <div class="taskbar">
         <a href="dashboard.php" class="taskbar-button">Dashboard</a>
         <a href="submit_quote.php" class="taskbar-button">Fuel Quote Form</a>
-        <a href="quote_history.html" class="taskbar-button">Fuel Quote History</a>
+        <a href="quote_history.php" class="taskbar-button">Fuel Quote History</a>
         <a href="profile_management.php" class="taskbar-button">Profile Management</a>
         <a href="logout.php" class="taskbar-button">Logout</a>
-</div>
+    </div>
+<h2>Edit Client Information</h2>
+
 <form method="post" action="">
     <label for="fullName">Full Name:</label><br>
     <input type="text" id="fullName" name="fullName" value="<?= !empty($clientData['FullName']) ? $clientData['FullName'] : '' ?>"><br>
