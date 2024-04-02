@@ -39,7 +39,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
     header("Location: login.php");
-    exit;
 } else {
     $username = $_SESSION['username'];
 }
