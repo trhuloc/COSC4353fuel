@@ -21,27 +21,22 @@ $stmt->bind_result($userID);
 $stmt->fetch();
 $stmt->close();
 
-// Calculate the average, minimum, and maximum gallons requested
-$stmt = $mysqli->prepare("SELECT AVG(GallonsRequested), MIN(GallonsRequested), MAX(GallonsRequested) FROM fuelquote WHERE UserID = ?");
-$stmt->bind_param("i", $userID);
+// Get state code
+$stmt = $mysqli->prepare("SELECT StateCode FROM clientinformation WHERE UserID = ?");
+$stmt->bind_param("i", $userID); // Assuming UserID is an integer
 $stmt->execute();
-$stmt->bind_result($avgGallonsRequested, $minGallonsRequested, $maxGallonsRequested);
+$stmt->bind_result($location);
 $stmt->fetch();
 $stmt->close();
 
-// Calculate the total amount spent on gallons requested
-$stmt = $mysqli->prepare("SELECT SUM(GallonsRequested * TotalAmountDue) FROM fuelquote WHERE UserID = ?");
-$stmt->bind_param("i", $userID);
-$stmt->execute();
-$stmt->bind_result($totalAmountSpent);
-$stmt->fetch();
-$stmt->close();
+$_SESSION['location'] = $location;
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Dashboard</title>
+    <title>Fuel Management System - Dashboard</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     <style>
@@ -70,20 +65,18 @@ $stmt->close();
     </style>
 </head>
 <body>
-<div class="taskbar">
-    <a href="dashboard.php" class="taskbar-button">Dashboard</a>
-    <a href="submit_quote.php" class="taskbar-button">Fuel Quote Form</a>
-    <a href="quote_history.php" class="taskbar-button">Fuel Quote History</a>
-    <a href="profile_management.php" class="taskbar-button">Profile Management</a>
-    <a href="logout.php" class="taskbar-button">Logout</a>
-</div>
+    <div class="taskbar">
+        <a href="dashboard.php" class="taskbar-button">Dashboard</a>
+        <a href="submit_quote.php" class="taskbar-button">Fuel Quote Form</a>
+        <a href="quote_history.html" class="taskbar-button">Fuel Quote History</a>
+        <a href="profile_management.php" class="taskbar-button">Profile Management</a>
+        <a href="logout.php" class="taskbar-button">Logout</a>
+    </div>
     <div class="container">
-        <h2>Welcome, <?php echo $username; ?>!</h2>
-        <h3>Quote Summary</h3>
-        <p>Average Gallons Requested: <?php echo $avgGallonsRequested; ?></p>
-        <p>Minimum Gallons Requested: <?php echo $minGallonsRequested; ?></p>
-        <p>Maximum Gallons Requested: <?php echo $maxGallonsRequested; ?></p>
-        <p>Total Amount Spent on Gallons Requested: $<?php echo $totalAmountSpent; ?></p>
+        <h2>Welcome to the Dashboard</h2>
+        <div class="dashboard-content">
+            <!-- Your dashboard content here -->
+        </div>
     </div>
 </body>
 </html>
