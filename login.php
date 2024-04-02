@@ -49,11 +49,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Verify the password
             if (password_verify($password, $hashed_password)) {
-                echo "Password is correct.";
+                
                 session_start();
                 $_SESSION['username'] = $username;
                 // Redirect to dashboard or any other page after successful login
                 header("Location: dashboard.php");
+                echo "Password is correct.";
             } else {
                 // Invalid password
                 echo "<p style='color: red;'>Invalid username or password.</p>";
