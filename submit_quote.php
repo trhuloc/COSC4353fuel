@@ -8,13 +8,25 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
     header("Location: login.php");
 } else {
     $username = $_SESSION['username'];
-    $location = $_SESSION['location'];
 }
 if (!isset($_SESSION['username'])) {
     $username = "testuser";
-    $location = "TX";
 }
+$stmt = $mysqli->prepare("SELECT UserID FROM usercredentials WHERE Username = ?");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$stmt->bind_result($userID);
+$stmt->fetch();
+$stmt->close();
 
+$pricingModule = new PricingModule(1.5); // $1.50 per gallon
+// Get $location by selecting statecode in clientcredentials table
+$stmt = $mysqli->prepare("SELECT StateCode FROM clientinformation WHERE UserID = ?");
+$stmt->bind_param("s", $userID);
+$stmt->execute();
+$stmt->bind_result($location);
+$stmt->fetch();
+$stmt->close();
 $instate = ($location == "TX") ? "In State" : "Out of State";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -47,21 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Gallons Requested must be a numeric value.";
     } else {
         // Get UserID from clientcredentials table
-        $stmt = $mysqli->prepare("SELECT UserID FROM usercredentials WHERE Username = ?");
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $stmt->bind_result($userID);
-        $stmt->fetch();
-        $stmt->close();
 
-        $pricingModule = new PricingModule(1.5); // $1.50 per gallon
-        // Get $location by selecting statecode in clientcredentials table
-        $stmt = $mysqli->prepare("SELECT StateCode FROM clientinformation WHERE UserID = ?");
-        $stmt->bind_param("s", $userID);
-        $stmt->execute();
-        $stmt->bind_result($location);
-        $stmt->fetch();
-        $stmt->close();
         // Get $hasHistory by selecting count(*) in fuelquote table
         $stmt = $mysqli->prepare("SELECT count(*) FROM fuelquote WHERE UserID = ?");
         $stmt->bind_param("s", $userID);

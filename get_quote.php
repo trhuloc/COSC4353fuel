@@ -54,23 +54,28 @@
         if (!isset($_SESSION['username'])) {
             $username = "testuser";
         }
-
+        $gallonsRequested = $_POST["gallonsRequested"];
+        $deliveryDate = $_POST["deliveryDate"];
+        $stmt = $mysqli->prepare("SELECT UserID FROM usercredentials WHERE Username = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->bind_result($userID);
+        $stmt->fetch();
+        $stmt->close();
+        $pricingModule = new PricingModule(1.5); // $1.50 per gallon
+        $stmt = $mysqli->prepare("SELECT StateCode FROM clientinformation WHERE UserID = ?");
+        $stmt->bind_param("s", $userID);
+        $stmt->execute();
+        $stmt->bind_result($location);
+        $stmt->fetch();
+        $stmt->close();
+        if ($location == "TX") {
+            $instate = "In State";
+        } else {
+            $instate = "Out of State";
+        }
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $gallonsRequested = $_POST["gallonsRequested"];
-            $deliveryDate = $_POST["deliveryDate"];
-            $stmt = $mysqli->prepare("SELECT UserID FROM usercredentials WHERE Username = ?");
-            $stmt->bind_param("s", $username);
-            $stmt->execute();
-            $stmt->bind_result($userID);
-            $stmt->fetch();
-            $stmt->close();
-            $pricingModule = new PricingModule(1.5); // $1.50 per gallon
-            $stmt = $mysqli->prepare("SELECT StateCode FROM clientinformation WHERE UserID = ?");
-            $stmt->bind_param("s", $userID);
-            $stmt->execute();
-            $stmt->bind_result($location);
-            $stmt->fetch();
-            $stmt->close();
+
             $stmt = $mysqli->prepare("SELECT count(*) FROM fuelquote WHERE UserID = ?");
             $stmt->bind_param("s", $userID);
             $stmt->execute();
@@ -83,12 +88,6 @@
                 $hasHistory = 0;
             }
             $totalPrice = $pricingModule->calculateTotalPrice($gallonsRequested, $location, $hasHistory);
-            $location = $_SESSION['location'];
-            if ($location == "TX") {
-                $instate = "In State";
-            } else {
-                $instate = "Out of State";
-            }
         }
         ?>
         <form id="quoteForm" action="get_quote.php" method="post">
