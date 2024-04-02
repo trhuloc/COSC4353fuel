@@ -79,9 +79,6 @@
             $stmt->close();
             header("Location: quote_success.html");
         }
-    } else {
-        // Handle empty form data
-        echo "Please fill out the form.";
     }
 ?>
 
@@ -91,7 +88,6 @@
     <title>Fuel Quote Form</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-    <script src="fuel_quote_form.js" defer></script>
     <style>
         .taskbar {
             background-color: #333;
@@ -120,21 +116,21 @@
 <body>
     <div class="taskbar">
         <a href="dashboard.php" class="taskbar-button">Dashboard</a>
-        <a href="submit_quote.html" class="taskbar-button">Fuel Quote Form</a>
-        <a href="quote_history.html" class="taskbar-button">Fuel Quote History</a>
+        <a href="submit_quote.php" class="taskbar-button">Fuel Quote Form</a>
+        <a href="quote_history.php" class="taskbar-button">Fuel Quote History</a>
         <a href="profile_management.php" class="taskbar-button">Profile Management</a>
         <a href="logout.php" class="taskbar-button">Logout</a>
     </div>
     <div class="container">
         <h2>Fuel Quote Form</h2>
-        <form action="submit_quote.php" method="post">
+        <form id="quoteForm" action="submit_quote.php" method="post">
             
             <label for="gallonsRequested">Gallons Requested:</label>
             <input type="number" id="gallonsRequested" name="gallonsRequested" min="1" value="0" required><br>
             <span id="test"></span><br>
 
             <label for="deliveryAddress">Delivery Address:</label>
-            <input type="text" id="deliveryAddress" name="deliveryAddress" value="In-state" readonly ><br>
+            <input type="text" id="deliveryAddress" name="deliveryAddress" readonly ><br>
 
             
             <label for="deliveryDate">Delivery Date:</label>
@@ -146,9 +142,53 @@
             <label for="totalAmountDue">Total Amount Due:</label>
             <input type="number" id="totalAmountDue" name="totalAmountDue" readonly step="0.01" ><br>
             
-            <input type="submit" value="Submit Quote">
+            <button type="button" id="getQuoteBtn">Get Quote</button>
+            <input type="submit" value="Submit Quote" id="submitQuoteBtn" disabled>
         </form>
     </div>
-</body>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+$(document).ready(function() {
+    // Function to enable/disable buttons based on form validity
+    function toggleButtons() {
+        var isValid = true;
+        $("#quoteForm input[required]").each(function() {
+            if ($(this).val() === "") {
+                isValid = false;
+                return false; // Stop the loop if a required field is empty
+            }
+        });
+
+        if (isValid) {
+            $("#getQuoteBtn").prop("disabled", false);
+            $("#submitQuoteBtn").prop("disabled", false);
+        } else {
+            $("#getQuoteBtn").prop("disabled", true);
+            $("#submitQuoteBtn").prop("disabled", true);
+        }
+    }
+
+    // Toggle buttons on input change
+    $("#quoteForm input").on("input", toggleButtons);
+
+    // Disable "Get Quote" button on page load if required fields are empty
+    toggleButtons();
+
+    // Click event for "Get Quote" button
+    $("#getQuoteBtn").click(function() {
+        var gallonsRequested = $("#gallonsRequested").val();
+        var deliveryDate = $("#deliveryDate").val();
+
+        if (gallonsRequested !== "" && deliveryDate !== "") {
+            // Submit form to get_quote.php
+            $("#quoteForm").attr("action", "get_quote.php").submit();
+        } else {
+            alert("Please fill out the required information.");
+        }
+    });
+});
+</script>
+</body>
 </html>
+
