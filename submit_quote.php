@@ -81,10 +81,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Set $instate value
        
-
+        $SuggestedPricePerGallon = $totalPrice / $gallonsRequested;
         // Insert into database
-        $stmt = $mysqli->prepare("INSERT INTO fuelquote (UserID, GallonsRequested, DeliveryDate, TotalAmountDue) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("iiss", $userID, $gallonsRequested, $deliveryDate, $totalPrice);
+        $stmt = $mysqli->prepare("INSERT INTO fuelquote (UserID, GallonsRequested, DeliveryDate, TotalAmountDue, SuggestedPricePerGallon) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("iissd", $userID, $gallonsRequested, $deliveryDate, $totalPrice, $SuggestedPricePerGallon);
         $stmt->execute();
         $stmt->close();
 
