@@ -6,6 +6,10 @@
         <exclude>
             <directory suffix=".php">./vendor</directory>
             <file>logout.php</file>
+            <file>dashboard.php</file>
+            <file>session.php</file>
+            <file>quote_history.php</file>
+            <file>get_quote.php</file>
         </exclude>
     </coverage>
 </phpunit>

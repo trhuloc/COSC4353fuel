@@ -21,7 +21,7 @@ SET @@SESSION.SQL_LOG_BIN= 0;
 -- GTID state at the beginning of the backup 
 --
 
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '16746f8a-cb70-11ee-b60c-000d3aa60a10:1-4';
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '16746f8a-cb70-11ee-b60c-000d3aa60a10:1-56';
 
 --
 -- Table structure for table `fuelquote`
@@ -32,18 +32,16 @@ DROP TABLE IF EXISTS `fuelquote`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fuelquote` (
   `QuoteID` int NOT NULL AUTO_INCREMENT,
-  `ClientID` int DEFAULT NULL,
+  `UserID` int DEFAULT NULL,
   `GallonsRequested` double NOT NULL,
   `DeliveryDate` date NOT NULL,
   `SuggestedPricePerGallon` double DEFAULT NULL,
   `TotalAmountDue` double DEFAULT NULL,
   PRIMARY KEY (`QuoteID`),
-  KEY `ClientID` (`ClientID`),
-  CONSTRAINT `fuelquote_ibfk_1` FOREIGN KEY (`ClientID`) REFERENCES `clientinformation` (`ClientID`),
-  CONSTRAINT `chk_positive_gallons` CHECK ((`GallonsRequested` > 0)),
-  CONSTRAINT `chk_positive_suggestedprice` CHECK ((`SuggestedPricePerGallon` >= 0)),
-  CONSTRAINT `chk_positive_totalamount` CHECK ((`TotalAmountDue` >= 0))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_user` (`UserID`),
+  CONSTRAINT `fk_user` FOREIGN KEY (`UserID`) REFERENCES `usercredentials` (`UserID`),
+  CONSTRAINT `chk_positive_suggestedprice` CHECK ((`SuggestedPricePerGallon` >= 0))
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,6 +50,7 @@ CREATE TABLE `fuelquote` (
 
 LOCK TABLES `fuelquote` WRITE;
 /*!40000 ALTER TABLE `fuelquote` DISABLE KEYS */;
+INSERT INTO `fuelquote` VALUES (1,NULL,4,'2024-04-17',NULL,9.2),(2,22,3,'2024-04-10',NULL,6.9),(3,22,3,'2024-04-10',NULL,6.9),(4,17,7,'2024-04-02',NULL,16.1),(5,17,5,'2022-10-01',NULL,11.5),(6,17,1000,'2024-10-01',NULL,2300),(7,17,5,'2022-10-01',NULL,11.5),(8,17,1000,'2024-10-01',NULL,2300),(9,17,-1,'2024-10-01',NULL,-2.3),(10,17,5,'2022-10-01',NULL,11.5),(11,17,1000,'2024-10-01',NULL,2300),(12,17,-1,'2024-10-01',NULL,-2.3),(13,17,5,'2022-10-01',NULL,11.5),(14,17,1000,'2024-10-01',NULL,2300),(15,NULL,-1,'2024-10-01',NULL,-2.3),(16,NULL,5,'2022-10-01',NULL,11.5),(17,NULL,1000,'2024-10-01',NULL,2300),(18,17,-1,'2024-10-01',NULL,-2.3),(19,17,5,'2022-10-01',NULL,11.5),(20,17,1000,'2024-10-01',NULL,2300),(21,NULL,-1,'2024-10-01',NULL,-2.3),(22,NULL,5,'2022-10-01',NULL,11.5),(23,NULL,1000,'2024-10-01',NULL,2300),(24,NULL,-1,'2024-10-01',NULL,-2.3),(25,NULL,5,'2022-10-01',NULL,11.5),(26,NULL,1000,'2024-10-01',NULL,2300),(27,17,6,'2024-04-10',NULL,13.8);
 /*!40000 ALTER TABLE `fuelquote` ENABLE KEYS */;
 UNLOCK TABLES;
 SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
@@ -65,4 +64,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-18 18:38:36
+-- Dump completed on 2024-04-01 17:39:07

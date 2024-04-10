@@ -21,7 +21,7 @@ SET @@SESSION.SQL_LOG_BIN= 0;
 -- GTID state at the beginning of the backup 
 --
 
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '16746f8a-cb70-11ee-b60c-000d3aa60a10:1-4';
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '16746f8a-cb70-11ee-b60c-000d3aa60a10:1-56';
 
 --
 -- Table structure for table `ratefactors`
@@ -57,4 +57,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-18 18:38:38
+-- Dump completed on 2024-04-01 17:39:05

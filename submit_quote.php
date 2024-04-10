@@ -176,6 +176,7 @@ $(document).ready(function() {
         }
     }
 
+
     // Toggle buttons on input change
     $("#quoteForm input").on("input", toggleButtons);
 
