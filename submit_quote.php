@@ -12,12 +12,17 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
 if (!isset($_SESSION['username'])) {
     $username = "testuser";
 }
-$stmt = $mysqli->prepare("SELECT UserID FROM usercredentials WHERE Username = ?");
+$stmt = $mysqli->prepare("SELECT UserID,ProfileUpdated  FROM usercredentials WHERE Username = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();
-$stmt->bind_result($userID);
+$stmt->bind_result($userID, $profileUpdated);
 $stmt->fetch();
 $stmt->close();
+
+if (!$profileUpdated OR $profileUpdated == 0) {
+    header("Location: profile_management.php");
+    exit();
+}
 
 $pricingModule = new PricingModule(1.5); // $1.50 per gallon
 // Get $location by selecting statecode in clientcredentials table

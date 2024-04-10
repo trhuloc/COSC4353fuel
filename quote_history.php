@@ -70,7 +70,7 @@
                 }
 
                 // Retrieve UserID corresponding to the username from the usercredential table
-                $stmt = $mysqli->prepare("SELECT UserID FROM usercredentials WHERE Username = ?");
+                $stmt = $mysqli->prepare("SELECT UserID,ProfileUpdated  FROM usercredentials WHERE Username = ?");
                 $stmt->bind_param("s", $username);
                 $stmt->execute();
                 $stmt->store_result();
@@ -78,12 +78,16 @@
                 // Check if a row is returned
                 if ($stmt->num_rows > 0) {
                     // Bind the result variables
-                    $stmt->bind_result($userID);
+                    $stmt->bind_result($userID,$profileUpdated);
                     // Fetch the result
                     $stmt->fetch();
                     // Close the statement
                     $stmt->close();
-
+                    
+                    if (!$profileUpdated OR $profileUpdated == 0) {
+                        header("Location: profile_management.php");
+                        exit();
+                    }
                     // SQL query to fetch fuel quote history for the specific user
                     $query = "SELECT QuoteID, UserID, GallonsRequested, DeliveryDate, SuggestedPricePerGallon, TotalAmountDue FROM fuelquote WHERE UserID = ?";
 
