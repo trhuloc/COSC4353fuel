@@ -21,7 +21,6 @@ $stmt->close();
 
 if (!$profileUpdated OR $profileUpdated == 0) {
     header("Location: profile_management.php");
-    exit();
 }
 
 $pricingModule = new PricingModule(1.5); // $1.50 per gallon
