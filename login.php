@@ -31,10 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve the submitted username and password
     $username = $_POST["username"];
     $password = $_POST["password"];
-
+    
     // Validate the input (you can add more validation logic here)
     if (empty($username) || empty($password)) {
-        echo "Please enter both username and password.";
+        echo "<p style='color: red;'>Please enter both username and password.</p>";
     } else {
         // Retrieve the hashed password from the database
         $stmt = $mysqli->prepare("SELECT UserID, Password FROM usercredentials WHERE Username = ?");
@@ -49,19 +49,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Verify the password
             if (password_verify($password, $hashed_password)) {
-                // Password is correct, start the session and store the username
+                
                 session_start();
                 $_SESSION['username'] = $username;
                 // Redirect to dashboard or any other page after successful login
                 header("Location: dashboard.php");
-                exit(); // Stop further execution after redirection
+                echo "Password is correct.";
             } else {
                 // Invalid password
-                echo "Invalid username or password.";
+                echo "<p style='color: red;'>Invalid username or password.</p>";
             }
         } else {
             // Invalid username
-            echo "Invalid username or password.";
+            echo "<p style='color: red;'>Invalid username or password.</p>";
         }
     }
 }

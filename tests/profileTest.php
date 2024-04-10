@@ -3,8 +3,12 @@ use PHPUnit\Framework\TestCase;
 
 class profileTest extends TestCase
 {
+    /**
+     * @runInSeparateProcess
+     */
     public function testFullNameIsRequired()
-    {
+    {   
+        include "db.php";
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['fullName'] = '';
         $_POST['address1'] = '123 Main St';
@@ -19,9 +23,12 @@ class profileTest extends TestCase
 
         $this->assertStringContainsString('Full Name is required.', $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testFullNameShouldNotExceed50Characters()
     {
+        include "db.php";
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['fullName'] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod.';
         $_POST['address1'] = '123 Main St';
@@ -36,9 +43,12 @@ class profileTest extends TestCase
 
         $this->assertStringContainsString('Full Name should not exceed 50 characters.', $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testAddress1IsRequired()
     {
+        include "db.php";
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['fullName'] = 'John Doe';
         $_POST['address1'] = '';
@@ -53,9 +63,12 @@ class profileTest extends TestCase
 
         $this->assertStringContainsString('Address 1 is required.', $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testAddress1ShouldNotExceed100Characters()
     {
+        include "db.php";
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['fullName'] = 'John Doe';
         $_POST['address1'] = str_repeat('a', 101);
@@ -70,9 +83,12 @@ class profileTest extends TestCase
 
         $this->assertStringContainsString('Address 1 should not exceed 100 characters.', $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testAddress2ShouldNotExceed100Characters()
     {
+        include "db.php";
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['fullName'] = 'John Doe';
         $_POST['address1'] = '123 Main St';
@@ -87,9 +103,12 @@ class profileTest extends TestCase
 
         $this->assertStringContainsString('Address 2 should not exceed 100 characters.', $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testCityIsRequired()
     {
+        include "db.php";
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['fullName'] = 'John Doe';
         $_POST['address1'] = '123 Main St';
@@ -104,9 +123,12 @@ class profileTest extends TestCase
 
         $this->assertStringContainsString('City is required.', $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testCityShouldNotExceed100Characters()
     {
+        include "db.php";
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['fullName'] = 'John Doe';
         $_POST['address1'] = '123 Main St';
@@ -121,9 +143,12 @@ class profileTest extends TestCase
 
         $this->assertStringContainsString('City should not exceed 100 characters.', $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testStateIsRequired()
     {
+        include "db.php";
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['fullName'] = 'John Doe';
         $_POST['address1'] = '123 Main St';
@@ -138,9 +163,12 @@ class profileTest extends TestCase
 
         $this->assertStringContainsString('State is required.', $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testStateShouldHaveValidFormat()
     {
+        include "db.php";
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['fullName'] = 'John Doe';
         $_POST['address1'] = '123 Main St';
@@ -155,9 +183,12 @@ class profileTest extends TestCase
 
         $this->assertStringContainsString('Invalid State format.', $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testZipcodeIsRequired()
     {
+        include "db.php";
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['fullName'] = 'John Doe';
         $_POST['address1'] = '123 Main St';
@@ -172,9 +203,12 @@ class profileTest extends TestCase
 
         $this->assertStringContainsString('Zipcode is required.', $output);
     }
-
+    /**
+     * @runInSeparateProcess
+     */
     public function testZipcodeShouldHaveValidFormat()
     {
+        include "db.php";
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['fullName'] = 'John Doe';
         $_POST['address1'] = '123 Main St';
@@ -189,6 +223,5 @@ class profileTest extends TestCase
 
         $this->assertStringContainsString('Invalid Zipcode format.', $output);
     }
-    //Add more test methods for other cases...
 }
-?>  
+?>
