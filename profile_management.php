@@ -133,6 +133,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
             $stmt->close();
         }
+        #update profileUpdated to 1
+        $stmt = $mysqli->prepare("UPDATE usercredentials SET profileUpdated = 1 WHERE UserID = ?");
+        $stmt->bind_param("i", $userID);
+        $stmt->execute();
+        $stmt->close(); 
 
         // Redirect to a success page
         header("Location: profile_success.html");
