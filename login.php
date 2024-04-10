@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve the submitted username and password
     $username = $_POST["username"];
     $password = $_POST["password"];
-
+    
     // Validate the input (you can add more validation logic here)
     if (empty($username) || empty($password)) {
         echo "<p style='color: red;'>Please enter both username and password.</p>";

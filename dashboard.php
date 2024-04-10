@@ -9,7 +9,7 @@ if (!isset($_SESSION['username'])) {
 
 $username = $_SESSION['username'];
 
-$stmt = $mysqli->prepare("SELECT UserID FROM usercredentials WHERE Username = ?");
+$stmt = $mysqli->prepare("SELECT UserID,ProfileUpdated  FROM usercredentials WHERE Username = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $stmt->store_result();
@@ -17,10 +17,14 @@ if ($stmt->num_rows == 0) {
     header("Location: index.html");
     exit();
 }
-$stmt->bind_result($userID);
+$stmt->bind_result($userID, $profileUpdated);
 $stmt->fetch();
 $stmt->close();
 
+if (!$profileUpdated OR $profileUpdated == 0) {
+    header("Location: profile_management.php");
+    exit();
+}
 // Calculate the average, minimum, and maximum gallons requested
 $stmt = $mysqli->prepare("SELECT AVG(GallonsRequested), MIN(GallonsRequested), MAX(GallonsRequested) FROM fuelquote WHERE UserID = ?");
 $stmt->bind_param("i", $userID);
