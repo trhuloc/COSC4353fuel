@@ -9,6 +9,7 @@ class quoteTest extends TestCase
      */
     public function testEmptyFields()
     {
+        include "db.php";
         $_SERVER["REQUEST_METHOD"] = "POST";
         $_POST["gallonsRequested"] = "";
         $_POST["deliveryDate"] = "";
@@ -25,6 +26,7 @@ class quoteTest extends TestCase
      */
     public function testInvalidGallonsRequested()
     {
+        include "db.php";
         $_SERVER["REQUEST_METHOD"] = "POST";
         $_POST["gallonsRequested"] = "abc";
         $_POST["deliveryDate"] = "2024-10-01";
