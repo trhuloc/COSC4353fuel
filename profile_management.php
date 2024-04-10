@@ -175,7 +175,59 @@ $stmt->close();
     <input type="text" id="city" name="city" value="<?= !empty($clientData['City']) ? $clientData['City'] : '' ?>"><br>
 
     <label for="state">State:</label><br>
-    <input type="text" id="state" name="state" maxlength="2" value="<?= !empty($clientData['StateCode']) ? $clientData['StateCode'] : '' ?>"><br>
+    <select id="state" name="state">
+        <option value="">Select State</option>
+        <option value="AL" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'AL' ? 'selected' : '' ?>>Alabama</option>
+        <option value="AK" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'AK' ? 'selected' : '' ?>>Alaska</option>
+        <option value="AZ" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'AZ' ? 'selected' : '' ?>>Arizona</option>
+        <option value="AR" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'AR' ? 'selected' : '' ?>>Arkansas</option>
+        <option value="CA" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'CA' ? 'selected' : '' ?>>California</option>
+        <option value="CO" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'CO' ? 'selected' : '' ?>>Colorado</option>
+        <option value="CT" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'CT' ? 'selected' : '' ?>>Connecticut</option>
+        <option value="DE" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'DE' ? 'selected' : '' ?>>Delaware</option>
+        <option value="FL" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'FL' ? 'selected' : '' ?>>Florida</option>
+        <option value="GA" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'GA' ? 'selected' : '' ?>>Georgia</option>
+        <option value="HI" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'HI' ? 'selected' : '' ?>>Hawaii</option>
+        <option value="ID" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'ID' ? 'selected' : '' ?>>Idaho</option>
+        <option value="IL" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'IL' ? 'selected' : '' ?>>Illinois</option>
+        <option value="IN" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'IN' ? 'selected' : '' ?>>Indiana</option>
+        <option value="IA" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'IA' ? 'selected' : '' ?>>Iowa</option>
+        <option value="KS" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'KS' ? 'selected' : '' ?>>Kansas</option>
+        <option value="KY" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'KY' ? 'selected' : '' ?>>Kentucky</option>
+        <option value="LA" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'LA' ? 'selected' : '' ?>>Louisiana</option>
+        <option value="ME" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'ME' ? 'selected' : '' ?>>Maine</option>
+        <option value="MD" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'MD' ? 'selected' : '' ?>>Maryland</option>
+        <option value="MA" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'MA' ? 'selected' : '' ?>>Massachusetts</option>
+        <option value="MI" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'MI' ? 'selected' : '' ?>>Michigan</option>
+        <option value="MN" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'MN' ? 'selected' : '' ?>>Minnesota</option>
+        <option value="MS" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'MS' ? 'selected' : '' ?>>Mississippi</option>
+        <option value="MO" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'MO' ? 'selected' : '' ?>>Missouri</option>
+        <option value="MT" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'MT' ? 'selected' : '' ?>>Montana</option>
+        <option value="NE" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'NE' ? 'selected' : '' ?>>Nebraska</option>
+        <option value="NV" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'NV' ? 'selected' : '' ?>>Nevada</option>
+        <option value="NH" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'NH' ? 'selected' : '' ?>>New Hampshire</option>
+        <option value="NJ" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'NJ' ? 'selected' : '' ?>>New Jersey</option>
+        <option value="NM" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'NM' ? 'selected' : '' ?>>New Mexico</option>
+        <option value="NY" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'NY' ? 'selected' : '' ?>>New York</option>
+        <option value="NC" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'NC' ? 'selected' : '' ?>>North Carolina</option>
+        <option value="ND" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'ND' ? 'selected' : '' ?>>North Dakota</option>
+        <option value="OH" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'OH' ? 'selected' : '' ?>>Ohio</option>
+        <option value="OK" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'OK' ? 'selected' : '' ?>>Oklahoma</option>
+        <option value="OR" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'OR' ? 'selected' : '' ?>>Oregon</option>
+        <option value="PA" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'PA' ? 'selected' : '' ?>>Pennsylvania</option>
+        <option value="RI" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'RI' ? 'selected' : '' ?>>Rhode Island</option>
+        <option value="SC" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'SC' ? 'selected' : '' ?>>South Carolina</option>
+        <option value="SD" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'SD' ? 'selected' : '' ?>>South Dakota</option>
+        <option value="TN" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'TN' ? 'selected' : '' ?>>Tennessee</option>
+        <option value="TX" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'TX' ? 'selected' : '' ?>>Texas</option>
+        <option value="UT" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'UT' ? 'selected' : '' ?>>Utah</option>
+        <option value="VT" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'VT' ? 'selected' : '' ?>>Vermont</option>
+        <option value="VA" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'VA' ? 'selected' : '' ?>>Virginia</option>
+        <option value="WA" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'WA' ? 'selected' : '' ?>>Washington</option>
+        <option value="WV" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'WV' ? 'selected' : '' ?>>West Virginia</option>
+        <option value="WI" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'WI' ? 'selected' : '' ?>>Wisconsin</option>
+        <option value="WY" <?= !empty($clientData['StateCode']) && $clientData['StateCode'] === 'WY' ? 'selected' : '' ?>>Wyoming</option>
+    </select><br>
 
     <label for="zipcode">Zipcode:</label><br>
     <input type="text" id="zipcode" name="zipcode" value="<?= !empty($clientData['Zipcode']) ? $clientData['Zipcode'] : '' ?>"><br>
