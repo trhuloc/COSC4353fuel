@@ -62,11 +62,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Validate Gallons Requested
-    if (!is_numeric($gallonsRequested) AND $isValid == true) {
+    if (!is_numeric($gallonsRequested)) {
         // Handle validation error
         echo "Gallons Requested must be a numeric value.";
         $isValid = false;
-    } else {
+    }
+    if($isValid) {
         // Get UserID from clientcredentials table
 
         // Get $hasHistory by selecting count(*) in fuelquote table
@@ -80,13 +81,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $hasHistory = 1;
         else
             $hasHistory = 0;
+            // Calculate $totalPrice
+            $totalPrice = $pricingModule->calculateTotalPrice($gallonsRequested, $location, $hasHistory);
+            $SuggestedPricePerGallon = 0;
 
-        // Calculate $totalPrice
-        $totalPrice = $pricingModule->calculateTotalPrice($gallonsRequested, $location, $hasHistory);
-
-        // Set $instate value
-       
-        $SuggestedPricePerGallon = $totalPrice / $gallonsRequested;
+            // Set $instate value
+            if ($gallonsRequested > 0) {
+                $SuggestedPricePerGallon = $totalPrice / $gallonsRequested;
+            }
         // Insert into database
         $stmt = $mysqli->prepare("INSERT INTO fuelquote (UserID, GallonsRequested, DeliveryDate, TotalAmountDue, SuggestedPricePerGallon) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("iissd", $userID, $gallonsRequested, $deliveryDate, $totalPrice, $SuggestedPricePerGallon);
