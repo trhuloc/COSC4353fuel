@@ -33,6 +33,7 @@ phpunit ./tests
 
 ## Step 5: Install Xdebug to run Code Coverage
 sudo apt-get install php-xdebug
+
 After the installation is complete you could run this command to generate the report
 
 XDEBUG_MODE=coverage phpunit --coverage-html ./coverage ./tests
