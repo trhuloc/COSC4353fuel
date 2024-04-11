@@ -92,7 +92,7 @@
         ?>
         <form id="quoteForm" action="get_quote.php" method="post">
             <label for="gallonsRequested">Gallons Requested:</label>
-            <input type="number" id="gallonsRequested" name="gallonsRequested" min="1" value="<?php echo isset($gallonsRequested) ? $gallonsRequested : ''; ?>" required><br>
+            <input type="number" id="gallonsRequested" name="gallonsRequested" min="1" value="<?php echo isset($gallonsRequested) ? $gallonsRequested : ''; ?>" readonly required><br>
 
             <label for="deliveryAddress">Delivery Address:</label>
             <input type="text" id="deliveryAddress" name="deliveryAddress" value="<?php echo isset($instate) ? $instate : ''; ?>" readonly><br>
@@ -107,6 +107,7 @@
             <input type="number" id="totalAmountDue" name="totalAmountDue" readonly step="0.01" value="<?php echo isset($totalPrice) ? $totalPrice : ''; ?>"><br>
 
             <input type="submit" value="Submit Quote" id="submitQuoteBtn">
+
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
