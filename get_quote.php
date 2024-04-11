@@ -55,6 +55,10 @@
             $username = "testuser";
         }
         $gallonsRequested = $_POST["gallonsRequested"];
+        if (empty($gallonsRequested) || empty($_POST["deliveryDate"]) || !is_numeric($gallonsRequested) || $gallonsRequested <= 0){
+            echo "<p style='color: red;'>Please fill out the required information.</p>";
+            header("Location: submit_quote.php");
+        }
         $deliveryDate = $_POST["deliveryDate"];
         $stmt = $mysqli->prepare("SELECT UserID FROM usercredentials WHERE Username = ?");
         $stmt->bind_param("s", $username);

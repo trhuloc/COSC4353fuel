@@ -37,10 +37,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $gallonsRequested = $_POST["gallonsRequested"];
     $deliveryDate = $_POST["deliveryDate"];
-
+    $isValid = true;
+    $errorMessages = [];
     if (empty($_POST["gallonsRequested"]) || empty($_POST["deliveryDate"])) {
         // Display error message and redirect back to form
         echo "Please fill out the required information.";
+        $isValid = false;
     }
 
     // Validate field types
@@ -48,6 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($gallonsRequested === false || $gallonsRequested <= 0) {
         // Display error message and redirect back to form
         echo "Gallons Requested must be larger than 0.";
+        $isValid = false;
     }
 
     $deliveryDate = $_POST["deliveryDate"];
@@ -55,12 +58,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($deliveryDate < $today) {
         // Display error message and redirect back to form
         echo "Delivery Date must be valid.";
+        $isValid = false;
     }
 
     // Validate Gallons Requested
-    if (!is_numeric($gallonsRequested)) {
+    if (!is_numeric($gallonsRequested) AND $isValid == true) {
         // Handle validation error
         echo "Gallons Requested must be a numeric value.";
+        $isValid = false;
     } else {
         // Get UserID from clientcredentials table
 
